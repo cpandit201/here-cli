@@ -8,8 +8,9 @@
     "url": "https://github.com/heremaps/here-cli"
   },
   "scripts": {
-    "prepare": "npx tsc",
-    "test": "npx tsc && npx mocha"
+    "prepare": "npm run snyk-protect && npx tsc",
+    "test": "npx tsc && npx mocha",
+    "snyk-protect": "snyk protect"
   },
   "license": "MIT",
   "dependencies": {
@@ -39,7 +40,8 @@
     "table": "^5.4.6",
     "tmp": "0.0.33",
     "user-settings": "0.2.0",
-    "xmldom": "^0.2.1"
+    "xmldom": "^0.2.1",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@turf/nearest-point-to-line": "6.0.0",
@@ -69,5 +71,6 @@
   },
   "files": [
     "bin/**/*"
-  ]
+  ],
+  "snyk": true
 }
