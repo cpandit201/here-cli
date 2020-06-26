@@ -160,7 +160,8 @@ async function cloneProject  (id : any, options: any) {
 
             //Download the GeospaceID from published project with the publisher's token -  Download the space from GET Search and save it in local temp file using /iterate features API
             let geoSpaceDownloadOptions = {
-                token : publishersToken
+                token : publishersToken,
+                limit : spaceStatsData.count.value // Fetch all features from base spaceID
             }
             let geoSpaceData = await getSpaceDataFromXyz(geoSpaceIDToCopy, geoSpaceDownloadOptions);
 
