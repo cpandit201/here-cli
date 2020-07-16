@@ -1,7 +1,7 @@
-#!/usr/bin/env node
+#!/usr/bin/env NODE_OPTIONS=--no-warnings node
 
 /*
-  Copyright (C) 2018 - 2019 HERE Europe B.V.
+  Copyright (C) 2018 - 2020 HERE Europe B.V.
   SPDX-License-Identifier: MIT
 
   Permission is hereby granted, free of charge, to any person obtaining
@@ -31,7 +31,7 @@ const program = require('commander');
 const settings = require('user-settings').file('.herecli');
 const latestVersion = require('latest-version');
 
-const commands = ["xyz", "studio","configure", "transform", "help", "geocode"];
+const commands = ["xyz", "studio", "xs","c","configure", "transform","tf", "help", "geocode","gc"];
 const fs = require('fs');
 const path = require('path');
 
@@ -44,6 +44,7 @@ const questionLicense = [
 ];
 
 async function start() {
+    process.removeAllListeners('warning');
     if (settings.get('GAlicense') === 'true') {
         await checkVersion();
     } else {
@@ -51,10 +52,10 @@ async function start() {
     }
 
     program
-    .version(getVersion())
-        .command('configure [set|verify]', 'setup configuration for authentication').alias('c')
-        .command('xyz [list|create|upload]', 'work with xyz spaces').alias('xs')
-        .command('studio [list|delete|clone|show]', 'work with xyz studio projects').alias('s')
+        .version(getVersion())
+        .command('configure [verify|refresh]', 'setup configuration for authentication').alias('c')
+        .command('xyz [list|create|upload]', 'work with Data Hub spaces').alias('xs')
+        .command('studio [list|delete|show]', 'work with HERE Studio projects')
         .command('transform [csv2geo|shp2geo|gpx2geo]', 'convert from csv/shapefile/gpx to geojson').alias('tf')
         .command('geocode', 'geocode feature').alias('gc')
         .parse(process.argv);
@@ -92,8 +93,8 @@ async function checkVersion() {
 async function showLicenseConfirmation() {
     console.log(fs.readFileSync(path.resolve(__dirname, 'beta-terms.txt'), 'utf8'));
     try {
-        const opn = require("opn");
-        opn("http://explore.xyz.here.com/terms-and-conditions",{wait:false});
+        const open = require("open");
+        open("http://explore.xyz.here.com/terms-and-conditions",{wait:false});
     } catch {
     }
 

@@ -1,3 +1,27 @@
+/*
+  Copyright (C) 2018 - 2020 HERE Europe B.V.
+  SPDX-License-Identifier: MIT
+
+  Permission is hereby granted, free of charge, to any person obtaining
+  a copy of this software and associated documentation files (the
+  'Software'), to deal in the Software without restriction, including
+  without limitation the rights to use, copy, modify, merge, publish,
+  distribute, sublicense, and/or sell copies of the Software, and to
+  permit persons to whom the Software is furnished to do so, subject to
+  the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
 var assert = require('assert');
 const expect = require('chai').expect;
 // var nrc = require('node-run-cmd');
@@ -192,7 +216,7 @@ describe('Configure', function () {
       });
       await xyz.__get__('deleteSpace')("myspace", { raw: false, prop: [] , force: true});
       capcon.stopCapture(process.stdout); 
-      if (output.indexOf("XYZ space 'myspace' deleted successfully")!=-1) {
+      if (output.indexOf("Data Hub space 'myspace' deleted successfully")!=-1) {
         assert.ok(true, "");
       } else {
         assert.fail();
@@ -207,7 +231,7 @@ describe('Configure', function () {
       });
       await xyz.__get__('createSpace')({ title: "test", message : "test" });
       capcon.stopCapture(process.stdout); 
-      if (output.indexOf("XYZ space 'testing' created successfully")!=-1) {
+      if (output.indexOf("Data Hub space 'testing' created successfully")!=-1) {
         assert.ok(true, "");
       } else {
         assert.fail();
@@ -266,7 +290,7 @@ describe('Configure', function () {
       });
       await xyz.__get__('uploadToXyzSpace')("myspace", { file: "test/data/sample.geojson"});
       capcon.stopCapture(process.stdout);     
-      if (output.indexOf("data upload to XYZ space 'myspace' completed")!=-1) {
+      if (output.indexOf("data upload to Data Hub space 'myspace' completed")!=-1) {
         assert.ok(true, "");
       } else {
         assert.fail();
@@ -290,7 +314,7 @@ describe('Configure', function () {
       });
       await xyz.__get__('uploadToXyzSpace')("myspace", { file: "test/data/sample.csv", delimiter: ',', quote: '"'});
       capcon.stopCapture(process.stdout);     
-      if (output.indexOf("data upload to XYZ space 'myspace' completed")!=-1) {
+      if (output.indexOf("data upload to Data Hub space 'myspace' completed")!=-1) {
         assert.ok(true, "");
       } else {
         assert.fail();
@@ -317,13 +341,13 @@ describe('Configure', function () {
       });
       await xyz.__get__('uploadToXyzSpace')("myspace", { file: "test/data/sample.gpx" });
       capcon.stopCapture(process.stdout);
-      if (output.indexOf("data upload to XYZ space 'myspace' completed") != -1) {
+      if (output.indexOf("data upload to Data Hub space 'myspace' completed") != -1) {
         assert.ok(true, "");
       } else {
         assert.fail();
       }
       console.log(output);
-      if (output.indexOf("1400 features uploaded to XYZ space 'myspace' in") != -1) {
+      if (output.indexOf("1400 features uploaded to Data Hub space 'myspace' in") != -1) {
         assert.ok(true, "");
       } else {
         assert.fail();
@@ -340,7 +364,7 @@ describe('Configure', function () {
       });
       await xyz.__get__('uploadToXyzSpace')("myspace", { file: "test/data/shapesample/shapesample.shp"});
       capcon.stopCapture(process.stdout);     
-      if (output.indexOf("data upload to XYZ space 'myspace' completed")!=-1) {
+      if (output.indexOf("data upload to Data Hub space 'myspace' completed")!=-1) {
         assert.ok(true, "");
       } else {
         assert.fail();
@@ -402,7 +426,7 @@ describe('Configure', function () {
       await xyz.__get__('uploadToXyzSpace')("myspace", { file: "test/data/sample.geojsonl"});
       capcon.stopCapture(process.stdout);     
       console.log("output::::"+output);
-      if (output.indexOf("data upload to XYZ space 'myspace' completed")!=-1) {
+      if (output.indexOf("data upload to Data Hub space 'myspace' completed")!=-1) {
         assert.ok(true, "");
       } else {
         assert.fail();
@@ -428,7 +452,7 @@ describe('Configure', function () {
     it('test here geocoder', async function () {      
       const requestAsync = require('../bin/requestAsync');
       requestAsync.requestAsync=async function(){
-        return {response:{statusCode:200},body:JSON.stringify({ "Response": { "MetaInfo": { "Timestamp": "2016-02-15T10:33:55.504+0000" }, "View": [ { "_type": "SearchResultsViewType", "ViewId": 0, "Result": [ { "Relevance": 1, "MatchLevel": "houseNumber", "MatchQuality": { "State": 1, "City": 1, "Street": [ 0.9 ], "HouseNumber": 1 }, "MatchType": "pointAddress", "Location": { "LocationId": "NT_nL.dzNwdSJgdcF4U8dYEiC_yADM", "LocationType": "address", "DisplayPosition": { "Latitude": 37.37634, "Longitude": -122.03405 }, "NavigationPosition": [ { "Latitude": 37.37643, "Longitude": -122.03444 } ], "MapView": { "TopLeft": { "Latitude": 37.3774642, "Longitude": -122.0354646 }, "BottomRight": { "Latitude": 37.3752158, "Longitude": -122.0326354 } }, "Address": { "Label": "200 S Mathilda Ave, Sunnyvale, CA 94086, United States", "Country": "USA", "State": "CA", "County": "Santa Clara", "City": "Sunnyvale", "District": "Heritage District", "Street": "S Mathilda Ave", "HouseNumber": "200", "PostalCode": "94086", "AdditionalData": [ { "value": "United States", "key": "CountryName" }, { "value": "California", "key": "StateName" }, { "value": "Santa Clara", "key": "CountyName" }, { "value": "N", "key": "PostalCodeType" } ] } } } ] } ] } })};
+        return {statusCode:200,body:JSON.stringify({ "Response": { "MetaInfo": { "Timestamp": "2016-02-15T10:33:55.504+0000" }, "View": [ { "_type": "SearchResultsViewType", "ViewId": 0, "Result": [ { "Relevance": 1, "MatchLevel": "houseNumber", "MatchQuality": { "State": 1, "City": 1, "Street": [ 0.9 ], "HouseNumber": 1 }, "MatchType": "pointAddress", "Location": { "LocationId": "NT_nL.dzNwdSJgdcF4U8dYEiC_yADM", "LocationType": "address", "DisplayPosition": { "Latitude": 37.37634, "Longitude": -122.03405 }, "NavigationPosition": [ { "Latitude": 37.37643, "Longitude": -122.03444 } ], "MapView": { "TopLeft": { "Latitude": 37.3774642, "Longitude": -122.0354646 }, "BottomRight": { "Latitude": 37.3752158, "Longitude": -122.0326354 } }, "Address": { "Label": "200 S Mathilda Ave, Sunnyvale, CA 94086, United States", "Country": "USA", "State": "CA", "County": "Santa Clara", "City": "Sunnyvale", "District": "Heritage District", "Street": "S Mathilda Ave", "HouseNumber": "200", "PostalCode": "94086", "AdditionalData": [ { "value": "United States", "key": "CountryName" }, { "value": "California", "key": "StateName" }, { "value": "Santa Clara", "key": "CountyName" }, { "value": "N", "key": "PostalCodeType" } ] } } } ] } ] } })};
       }
       const xyz = rewire('../bin/here-geocode');
       var output = '';
